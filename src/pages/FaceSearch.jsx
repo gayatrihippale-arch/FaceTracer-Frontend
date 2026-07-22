@@ -7,7 +7,7 @@ import GlassCard from "../components/GlassCard";
 export default function FaceSearch() {
   const navigate = useNavigate();
   const [mode, setMode] = useState("upload"); // upload / webcam
-  
+
   // File upload state
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -68,13 +68,13 @@ export default function FaceSearch() {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       const ctx = canvas.getContext("2d");
-      
+
       // Mirror the webcam image for user convenience
       ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
-      
+
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      
+
       // Reset transform
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -121,7 +121,7 @@ export default function FaceSearch() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:8000/face-search", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/face-search`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData
@@ -168,22 +168,20 @@ export default function FaceSearch() {
       <div className="flex gap-4">
         <button
           onClick={() => setMode("upload")}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-            mode === "upload"
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all border ${mode === "upload"
               ? "bg-amber-500/10 border-amber-500/30 text-gold-400"
               : "bg-white/5 border-white/5 text-gray-400 hover:text-white"
-          }`}
+            }`}
         >
           <Upload className="w-4 h-4" />
           Upload Image File
         </button>
         <button
           onClick={() => setMode("webcam")}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-            mode === "webcam"
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all border ${mode === "webcam"
               ? "bg-amber-500/10 border-amber-500/30 text-gold-400"
               : "bg-white/5 border-white/5 text-gray-400 hover:text-white"
-          }`}
+            }`}
         >
           <Video className="w-4 h-4" />
           Use Live Webcam
@@ -210,7 +208,7 @@ export default function FaceSearch() {
                   muted
                   className="w-full h-full object-cover scale-x-[-1]"
                 />
-                
+
                 {/* Targeting HUD overlay */}
                 <div className="absolute inset-8 border border-dashed border-amber-500/25 pointer-events-none rounded-xl flex items-center justify-center">
                   <div className="w-48 h-48 border border-amber-500/30 rounded-full flex items-center justify-center">
@@ -262,7 +260,7 @@ export default function FaceSearch() {
               <p className="text-gray-400 text-sm font-light leading-relaxed">
                 Our artificial intelligence matching core will crop the query faces, normalize lightning features, generate feature weights, and scan matches.
               </p>
-              
+
               <div className="border-t border-white/5 pt-4 space-y-2">
                 <div className="flex justify-between text-xs font-semibold">
                   <span className="text-gray-400">Scan Pipeline:</span>
@@ -310,7 +308,7 @@ export default function FaceSearch() {
           </GlassCard>
         </div>
       </div>
-      
+
       {/* Adding laser scan CSS directly as style block for fast integration */}
       <style>{`
         @keyframes laser {

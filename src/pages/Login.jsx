@@ -18,10 +18,15 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
       const data = await response.json();
@@ -33,7 +38,7 @@ export default function Login() {
       localStorage.setItem("token", data.access_token);
 
       // Fetch user info with the token
-      const meResponse = await fetch("http://localhost:8000/users/me", {
+      const meResponse = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, {
         headers: { Authorization: `Bearer ${data.access_token}` }
       });
       const meData = await meResponse.json();
@@ -151,11 +156,11 @@ export default function Login() {
           <div className="p-5 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-3xl mb-8 shadow-gold-glow-lg scale-110">
             <Eye className="w-16 h-16 text-black stroke-[2.5]" />
           </div>
-          
+
           <h2 className="text-5xl font-black tracking-tight mb-4 bg-gradient-to-r from-white via-yellow-100 to-amber-300 bg-clip-text text-transparent leading-none">
             FaceTracer Security
           </h2>
-          
+
           <p className="text-gray-300 max-w-md text-base font-light leading-relaxed">
             AI-driven instant facial cataloging and search. Secure cryptographic face mapping tailored for public administration and local enforcement.
           </p>

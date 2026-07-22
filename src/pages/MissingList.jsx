@@ -24,7 +24,7 @@ export default function MissingList() {
     setError("");
 
     const token = localStorage.getItem("token");
-    
+
     // Construct Query Params
     const params = new URLSearchParams();
     if (search) params.append("search", search);
@@ -34,9 +34,14 @@ export default function MissingList() {
     if (ageMax) params.append("age_max", ageMax);
 
     try {
-      const response = await fetch(`http://localhost:8000/missing-persons?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/missing-persons?${params.toString()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to load missing directory.");
@@ -63,12 +68,12 @@ export default function MissingList() {
   const handleToggleStatus = async (id, currentStatus) => {
     const nextStatus = currentStatus === "Active" ? "Resolved" : "Active";
     const token = localStorage.getItem("token");
-    
+
     const formData = new FormData();
     formData.append("status", nextStatus);
 
     try {
-      const response = await fetch(`http://localhost:8000/missing-persons/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/missing-persons?${params.toString()}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: formData
@@ -109,7 +114,7 @@ export default function MissingList() {
                 className="w-full glass-input pl-12 pr-4 py-3 rounded-xl text-sm"
               />
             </div>
-            
+
             {/* Gender Filter */}
             <div className="md:col-span-3">
               <select
@@ -160,7 +165,7 @@ export default function MissingList() {
                 className="w-16 glass-input px-2.5 py-1.5 rounded-lg text-xs text-center"
               />
             </div>
-            
+
             <div className="flex gap-2">
               <button
                 type="button"
@@ -208,14 +213,14 @@ export default function MissingList() {
               {/* Photo header */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-navy-950 border-b border-white/5">
                 <img
-                  src={`http://localhost:8000/${person.photo_path}`}
+                  src={`${import.meta.env.VITE_API_URL}/${person.photo_path}`}
                   alt={person.name}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   onError={(e) => {
                     e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.2)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'/%3E%3C/svg%3E";
                   }}
                 />
-                
+
                 {/* Status Badge */}
                 <div className="absolute top-3 right-3">
                   {person.status === "Active" ? (
@@ -239,7 +244,7 @@ export default function MissingList() {
                       Age {person.age}
                     </span>
                   </div>
-                  
+
                   <div className="space-y-1.5 text-xs text-gray-400 font-medium">
                     <div className="flex items-center gap-1.5">
                       <User className="w-3.5 h-3.5 text-gray-500" />
@@ -265,11 +270,10 @@ export default function MissingList() {
                 {/* Status Toggler */}
                 <button
                   onClick={() => handleToggleStatus(person.id, person.status)}
-                  className={`w-full py-2 rounded-xl text-xs font-bold transition-all border flex items-center justify-center gap-1.5 ${
-                    person.status === "Active"
-                      ? "bg-emerald-950/40 hover:bg-emerald-900/60 border-emerald-500/30 text-emerald-300"
-                      : "bg-red-950/40 hover:bg-red-900/60 border-red-500/30 text-red-300"
-                  }`}
+                  className={`w-full py-2 rounded-xl text-xs font-bold transition-all border flex items-center justify-center gap-1.5 ${person.status === "Active"
+                    ? "bg-emerald-950/40 hover:bg-emerald-900/60 border-emerald-500/30 text-emerald-300"
+                    : "bg-red-950/40 hover:bg-red-900/60 border-red-500/30 text-red-300"
+                    }`}
                 >
                   {person.status === "Active" ? (
                     <>

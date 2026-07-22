@@ -30,7 +30,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/auth/register", {
+      const response = await fetch("${import.meta.env.VITE_API_URL}/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, password, role })
@@ -222,11 +222,11 @@ export default function Register() {
           <div className="p-5 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-3xl mb-8 shadow-gold-glow-lg scale-110">
             <Eye className="w-16 h-16 text-black stroke-[2.5]" />
           </div>
-          
+
           <h2 className="text-5xl font-black tracking-tight mb-4 bg-gradient-to-r from-white via-yellow-100 to-amber-300 bg-clip-text text-transparent leading-none">
             Join FaceTracer
           </h2>
-          
+
           <p className="text-gray-300 max-w-md text-base font-light leading-relaxed">
             Create an verified agency profile to register missing person folders, run live face scans, and review investigation matches.
           </p>

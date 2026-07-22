@@ -20,8 +20,10 @@ export default function Dashboard() {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/dashboard/stats", {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/dashboard/stats`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!response.ok) {
@@ -136,12 +138,12 @@ export default function Dashboard() {
             <AreaChart data={stats?.cases_over_time || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4}/>
-                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0}/>
+                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.0}/>
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
               <XAxis dataKey="name" stroke="#6b7280" fontSize={11} tickLine={false} />
@@ -195,7 +197,7 @@ export default function Dashboard() {
                   <tr key={search.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-3 px-4">
                       <img
-                        src={`http://localhost:8000/${search.searched_photo_path}`}
+                        src={`${import.meta.env.VITE_API_URL}/${search.searched_photo_path}`}
                         alt="Searched Query"
                         className="w-10 h-10 object-cover rounded-lg border border-white/10"
                         onError={(e) => {

@@ -78,12 +78,12 @@ export default function RegisterMissing() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:8000/missing-persons", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/missing-persons`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: formData
+        body: formData,
       });
 
       const data = await response.json();
@@ -130,15 +130,14 @@ export default function RegisterMissing() {
           <label className="block text-xs font-semibold text-gold-400 uppercase tracking-wider">
             Biometric Photo Upload
           </label>
-          
+
           <div
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            className={`flex-1 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center p-6 text-center transition-all ${
-              photoPreview
+            className={`flex-1 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center p-6 text-center transition-all ${photoPreview
                 ? "border-amber-500/40 bg-amber-500/5"
                 : "border-white/10 hover:border-amber-500/30 bg-white/[0.02]"
-            }`}
+              }`}
             style={{ minHeight: "260px" }}
           >
             {photoPreview ? (

@@ -47,11 +47,10 @@ export default function Result() {
 
       {/* Match Status Banner */}
       <div
-        className={`w-full p-6 rounded-2xl border flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-500 ${
-          match_found
-            ? "bg-emerald-950/20 border-emerald-500/30 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.05)]"
-            : "bg-red-950/20 border-red-500/30 text-red-300 shadow-[0_0_20px_rgba(239,68,68,0.05)]"
-        }`}
+        className={`w-full p-6 rounded-2xl border flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-500 ${match_found
+          ? "bg-emerald-950/20 border-emerald-500/30 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.05)]"
+          : "bg-red-950/20 border-red-500/30 text-red-300 shadow-[0_0_20px_rgba(239,68,68,0.05)]"
+          }`}
       >
         <div className="flex items-start gap-4">
           <div className="mt-1">
@@ -97,7 +96,7 @@ export default function Result() {
           <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-wider">Scanned Query Target</h3>
           <div className="aspect-[4/3] rounded-xl overflow-hidden bg-navy-950 border border-white/5 shadow-inner">
             <img
-              src={`http://localhost:8000/${searched_photo_path}`}
+              src={`${import.meta.env.VITE_API_URL}/${searched_photo_path}`}
               alt="Query Target"
               className="w-full h-full object-cover"
               onError={(e) => {
@@ -110,12 +109,12 @@ export default function Result() {
         {/* Database Match Image & Data */}
         <GlassCard hover={false} className="flex flex-col gap-4">
           <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-wider">Matched Profile Folder</h3>
-          
+
           {match_found && matched_person ? (
             <div className="flex-1 flex flex-col justify-between gap-4">
               <div className="aspect-[4/3] rounded-xl overflow-hidden bg-navy-950 border border-white/5 shadow-inner">
                 <img
-                  src={`http://localhost:8000/${matched_person.photo_path}`}
+                  src={`${import.meta.env.VITE_API_URL}/${matched_person.photo_path}`}
                   alt="Matched Directory Portrait"
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -149,7 +148,7 @@ export default function Result() {
                 <span>{matched_person.gender}, Age {matched_person.age}</span>
               </div>
             </div>
-            
+
             <div className="space-y-1">
               <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Last Tracked Location</span>
               <div className="flex items-center gap-2 text-sm font-semibold text-white pt-1">

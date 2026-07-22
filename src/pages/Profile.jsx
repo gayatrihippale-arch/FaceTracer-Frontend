@@ -7,7 +7,7 @@ import GlassCard from "../components/GlassCard";
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  
+
   // Edit states
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -55,7 +55,7 @@ export default function Profile() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/users/me", {
+      const response = await fetch("${import.meta.env.VITE_API_URL}/users/me", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export default function Profile() {
             <div className="w-20 h-20 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-full flex items-center justify-center mx-auto shadow-gold-glow">
               <User className="w-10 h-10 text-black stroke-[2.5]" />
             </div>
-            
+
             <div>
               <h3 className="text-xl font-bold text-white leading-tight">{user?.name}</h3>
               <p className="text-gray-400 text-xs mt-1">{user?.email}</p>
@@ -142,7 +142,7 @@ export default function Profile() {
         <div className="md:col-span-8">
           <GlassCard hover={false}>
             <h3 className="text-lg font-bold text-white mb-6">Modify Settings</h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
